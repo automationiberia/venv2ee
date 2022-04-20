@@ -77,3 +77,14 @@ Now, the new Execution Environment can be used from an Ansible Automation Plator
 
 ![AAP Execution Environment](https://github.com/automation-ansible-collections/venv2ee/blob/main/pictures/AAP_JobOutput.png?raw=true)
 
+The playbook executed is the following one:
+
+```yaml
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - debug:
+        msg: "Version: {{ lookup('pipe', 'aws --version') }}"
+...
+```
