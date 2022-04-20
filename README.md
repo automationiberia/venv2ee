@@ -71,11 +71,11 @@ Storing signatures
 ## Use the new Execution Environment
 Now, the new Execution Environment can be used from an Ansible Automation Platorm:
 
-![AAP Execution Environment](https://github.com/automation-ansible-collections/venv2ee/blob/main/pictures/AAP_EE.png?raw=true)
+![AAP Execution Environment](pictures/AAP_EE.png)
 
-![AAP Execution Environment](https://github.com/automation-ansible-collections/venv2ee/blob/main/pictures/AAP_JobDetails.png?raw=true)
+![AAP Execution Environment](pictures/AAP_JobDetails.png)
 
-![AAP Execution Environment](https://github.com/automation-ansible-collections/venv2ee/blob/main/pictures/AAP_JobOutput.png?raw=true)
+![AAP Execution Environment](pictures/AAP_JobOutput.png)
 
 The playbook executed is the following one:
 
