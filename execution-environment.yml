@@ -11,8 +11,7 @@ dependencies:
 additional_build_steps:
   append:
     - RUN alternatives --set python /usr/bin/python3
-    - ADD _build/awscliv2.venv.tar.gz /root
-    - ENV PATH "/root/awscliv2/bin:${PATH}"
-    - RUN echo "export PATH=/root/awscliv2/bin:${PATH}" >> /etc/bashrc
+    - ADD _build/${VENV_NAME}.venv.tar.gz /root
+    - ENV PATH "/root/${VENV_NAME}/bin:${PATH}"
+    - RUN echo "export PATH=/root/${VENV_NAME}/bin:${PATH}" >> /etc/bashrc
 ...     
-
