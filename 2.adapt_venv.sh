@@ -2,6 +2,7 @@
 
 if [ $# -ne 1 ]; then
   echo "Usage: ${0} <venv_dir>
+  exit 1
 fi
 
 INPUT_VENV="${1}"
