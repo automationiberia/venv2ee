@@ -20,4 +20,4 @@ done
 sed -i 's,^VIRTUAL_ENV.*$,VIRTUAL_ENV="${BASH_SOURCE%%/bin/activate}",' "${INPUT_VENV}/bin/activate"
 
 # Compress the virtual environment so it can be installed into a container in next steps
-tar cvf - "${INPUT_VENV}" | gzip -v9 > "${INPUT_VENV}.venv.tar.gz"
+tar cvf - "${INPUT_VENV}" | gzip -9 > "${INPUT_VENV}.venv.tar.gz"
