@@ -1,18 +1,31 @@
 ---
-version: 1
+version: 3
 build_arg_defaults:
   ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: "-vvv"
-  EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-21/ee-29-rhel8:1.0.0-88'
-ansible_config: 'ansible.cfg'
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-21/ee-29-rhel8:1.0.0-88
 dependencies:
   galaxy: requirements.yml
   python: requirements.txt
   system: bindep.txt
+options:
+  package_manager_path: /usr/bin/microdnf
+additional_build_files:
+    - src: ansible.cfg
+      dest: configs
+    - src: "*.venv.tar.gz"
+      dest: extra_files
 additional_build_steps:
-  append:
+  prepend_galaxy:
+    - ADD _build/configs/ansible.cfg ~/.ansible.cfg
+  prepend_builder:
+    - COPY _build/scripts/ /output/scripts/
+  append_final:
+    - ARG venv_name
     - RUN alternatives --set python /usr/bin/python3
-    - ADD _build/awscliv2.venv.tar.gz /root
-    - ENV PATH "/root/awscliv2/bin:${PATH}"
-    - RUN echo "export PATH=/root/awscliv2/bin:${PATH}" >> /etc/bashrc
+    - ADD _build/extra_files/${venv_name}.venv.tar.gz /root
+    - ENV PATH "/root/${venv_name}/bin:${PATH}"
+    - RUN echo "export PATH=/root/${venv_name}/bin:${PATH}" >> /etc/bashrc
 ...
 

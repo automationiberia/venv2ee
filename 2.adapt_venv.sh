@@ -16,9 +16,10 @@ done
 
 # Update the virtualenv activation script (only take care of the bash version)
 sed -i 's,^VIRTUAL_ENV.*$,VIRTUAL_ENV="${BASH_SOURCE%%/bin/activate}",' ${1}/bin/activate
-# grep -lRE '^#\!/.*/bin/.*' ${1} | while read file; do
-#   sed -i 's,^#\!/.*/bin/.*,,' ${file}
-# done
+grep -lRE '^#\!/.*/bin/.*' ${1} | while read file; do
+  #sed -i 's,(^#\!)/.*/bin/(.*),%1%2' ${file}
+  sed -ri 's,(^#\!).*/(.*),\1/usr/bin/env \2,g' "${file}"
+done
 
 # Compress the virtual environment so it can be installed into a container in next steps
 tar cf - ${1} | gzip -9 > ${1}.venv.tar.gz
