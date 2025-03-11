@@ -12,7 +12,7 @@ IMG=${3}
 read -s -p "Type the ${USR}'s password to push the image to ${AAH}: " PWD
 
 # Build the container
-ansible-builder build --tag ${AAH}/${IMG} || exit 2
+ansible-builder build --build-arg venv_name="${3%:*}" --tag ${AAH}/${IMG} || exit 2
 
 # Publish the container
 podman login "${AAH}" -u "${USR}" -p "${PWD}" --tls-verify=false || exit 3
