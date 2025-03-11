@@ -4,7 +4,7 @@
 # virtualenv --relocatable ${1}
 
 # Remove all the 'pyc' files in the venv
-find ${1} -name "*.pyc" -exec rm -f {} \;
+#find ${1} -name "*.pyc" -exec rm -f {} \;
 
 # Remove the links so they become the final files
 #find ${1}/ -type l -ls | grep "/usr/" | while read a b c d e f g h i j dest l orig; do
@@ -13,11 +13,17 @@ find ${1}/ -type l -ls | grep $PWD | while read a b c d e f g h i j dest l orig;
   cp -a ${orig} ${dest}
 done
 
-# Update the virtualenv activation script (only take care of the bash version)
-sed -i 's,^VIRTUAL_ENV.*$,VIRTUAL_ENV="${BASH_SOURCE%%/bin/activate}",' ${1}/bin/activate
-grep -lRE '^#\\!/.*/bin/.*' ${1} 2>/dev/null | while read file; do
-  sed -ri 's,(^#\\!).*/(.*),\1/usr/bin/env \2,g' "${file}" 2>/dev/null
+grep -lR "/var/lib/awx" "${1}/bin" 2>/dev/null | while read file; do
+  sed -i 's,/var/lib/awx/venv,/root,g' ${file}
 done
+# Update the virtualenv activation script (only take care of the bash version)
+# for file in ${1}/bin/activate*; do
+#   #sed -i 's,^VIRTUAL_ENV.*$,VIRTUAL_ENV="${BASH_SOURCE%%/bin/activate}",' ${file}
+#   sed -i 's,(^|set.* )VIRTUAL_ENV.*$,VIRTUAL_ENV="${BASH_SOURCE%%/bin/activate}",' ${file}
+# done
+# grep -lRE '^#\\!/.*/bin/.*' ${1} 2>/dev/null | while read file; do
+#   sed -ri 's,(^#\\!).*/(.*),\1/usr/bin/env \2,g' "${file}" 2>/dev/null
+# done
 
 # Compress the virtual environment so it can be installed into a container in next steps
 tar cf - ${1} | gzip -9 > ${1}.venv.tar.gz
