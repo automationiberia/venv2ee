@@ -14,5 +14,5 @@ additional_build_steps:
     - ADD _build/awscliv2.venv.tar.gz /root
     - ENV PATH "/root/awscliv2/bin:${PATH}"
     - RUN echo "export PATH=/root/awscliv2/bin:${PATH}" >> /etc/bashrc
-...     
+...
 
