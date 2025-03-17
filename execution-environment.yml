@@ -27,5 +27,6 @@ additional_build_steps:
     - ADD _build/extra_files/${venv_name}.venv.tar.gz /root
     - ENV PATH "/root/${venv_name}/bin:${PATH}"
     - RUN echo "export PATH=/root/${venv_name}/bin:${PATH}" >> /etc/bashrc
+    - RUN type python2.7 &>/dev/null && (ansible --version || pip2.7 install ansible==2.10.7 --trusted-host pypi.python.org)
 ...
 
